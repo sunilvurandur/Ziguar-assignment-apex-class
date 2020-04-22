@@ -1,0 +1,19 @@
+@isTest
+public class LeadProcessorTest {
+@testSetup
+static void setup() {
+List<Lead> Leads = new List<Lead>();
+for(Integer i=0; i <100; i++) {
+Leads.add(new lead(LastName = ‘Vurandur’+i, FirstName=’Sunil’+i, Email=’test’+i+’sunilvurandur101@gmail.com’, LeadSource=’none’, Company=’salesforce’, Rating='cold'));
+}
+insert Leads;
+}
+
+static testmethod void test() {
+Test.startTest();
+LeadProcessor lp =new LeadProcessor();
+Id BatchId = Database.executeBatch(lp);
+Test.stopTest();
+System.assertEquals([select count() from Lead Where LeadSource=’DreamForce’], 100);
+}
+}
